@@ -1,19 +1,19 @@
 const router = require("express").Router();
-const { apiConfig } = require("./api");
+const { config } = require("./api");
 
-for (let keys in apiConfig) {
-  switch (apiConfig[keys].method) {
-    case "GET":
-      router.get("/" + keys, apiConfig[keys].config);
+for (let keys in config) {
+  switch (config[keys].method) {
+    case "get":
+      router.get(`/${keys}`, config[keys].config);
 
-    case "POST":
-      router.post("/" + keys, apiConfig[keys].config);
+    case "post":
+      router.post(`/${keys}`, config[keys].config);
 
-    case "PATCH":
-      router.post("/" + keys, apiConfig[keys].config);
+    case "patch":
+      router.post(`/${keys}`, config[keys].config);
 
-    case "DELETE":
-      router.post("/" + keys, apiConfig[keys].config);
+    case "delete":
+      router.post(`/${keys}`, config[keys].config);
   }
 }
 
