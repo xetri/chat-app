@@ -15,9 +15,8 @@
     "url": "https://github.com/Avrel3/enkrypton.git"
   },
   "scripts": {
-    "start": "./bin/app",
-    "test": "echo \"Encrypton: Crypto Trading App\"",
-    "cache": "git rm --cached ."
+    "start": "node ./bin/app.js",
+    "test": "echo \"Encrypton: Crypto Trading App\""
   },
   "dependencies": {
     "axios": "^1.1.3",
