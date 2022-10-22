@@ -7,4 +7,11 @@ function hello(req, res) {
   });
 }
 
-module.exports = { hello };
+const apiConfig = {
+  hello: {
+    config: hello,
+    method: "GET",
+  },
+};
+
+module.exports = { apiConfig };

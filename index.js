@@ -16,6 +16,10 @@ app.engine("html", ejs.renderFile);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "html");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(require("cookie-parser")());
+
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/", router);
 

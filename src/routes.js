@@ -6,14 +6,8 @@ function index(req, res) {
   });
 }
 
-function login(req, res) {
-  return res.render("login", {
-    name,
-  });
-}
-
-function register(req, res) {
-  return res.render("register", {
+function auth(req, res) {
+  return res.render("Auth", {
     name,
   });
 }
@@ -30,7 +24,6 @@ function error(req, res) {
 
 module.exports = {
   index,
-  login,
-  register,
+  auth,
   error,
 };

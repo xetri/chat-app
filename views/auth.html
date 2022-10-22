@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/auth.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script defer src="/public/js/auth.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <title><%= name %></title>
+  </head>
+  <body>
+    <div class="form-div container">
+      <form class="form">
+        <input
+          class="form-input input-username form-control"
+          placeholder="Username"
+          name="username"
+          id="username"
+          autocomplete="name"
+          type="text"
+        />
+        <input
+          class="form-input input-password form-control"
+          name="password"
+          id="password"
+          autocomplete="password"
+          placeholder="********"
+          type="password"
+        />
+        <button
+          class="form-button btn-login btn btn-primary w-100"
+          type="submit"
+        >
+          Login
+        </button>
+        <button
+          class="form-button btn-register btn btn-secondary w-100"
+          id="register"
+          type="button"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

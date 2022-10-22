@@ -8,13 +8,16 @@ const api = require("./src/api");
 // -- START -- //
 
 router.get("/", routes.index);
-router.get("/login", routes.login);
-router.get("/register", routes.register);
+router.get("/auth", routes.auth);
+
+// -- redirect -- //
+router.get("/login", (req, res) => res.redirect("/auth"));
+router.get("/register", (req, res) => res.redirect("/auth"));
 
 // -- END -- //
 
 router.use("/api", api); // -- api -- //
 
-router.get("/*", routes.error); // -- 404 -- //
+router.get("*", routes.error); // -- 404 -- //
 
 module.exports = router;
