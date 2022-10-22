@@ -4,11 +4,18 @@ const app = express();
 const ejs = require("ejs");
 const router = require("./router");
 const { existsSync, writeFileSync } = require("fs");
+const db = require("./src/_db");
 
 /* configuration */
 
 require("dotenv").config();
 if (!existsSync("./.db")) writeFileSync("./.db", "");
+db.run(
+  "CREATE TABLE IF NOT EXISTS user ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'uid' VARCHAR(25) UNIQUE NOT NULL, 'username' VARCHAR(100) UNIQUE NOT NULL, 'password' VARCHAR(100) NOT NULL, 'time' INTEGER)",
+  (err) => {
+    if (err) throw new Error(err.message);
+  }
+);
 
 // -- START -- //
 
