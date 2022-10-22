@@ -9,4 +9,4 @@ function query(query, data) {
 }
 
 module.exports.query = query
-module.exports.sql = db;
+module.exports.sqlite = db;
