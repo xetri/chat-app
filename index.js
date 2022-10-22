@@ -1,94 +1,29 @@
-'use strict'
 const express = require('express')
-const httpErrors = require('http-errors')
 const path = require('path')
+const app = express();
 const ejs = require('ejs')
-const pino = require('pino')
-const pinoHttp = require('pino-http')
+const router = require("./router");
+const { existsSync, writeFileSync } = require("fs");
+require("dotenv").config();
 
-module.exports = function main (options, cb) {
-  // Set default options
-  const ready = cb || function () {}
-  const opts = Object.assign({
-    // Default options
-  }, options)
+/* configuration */
 
-  const logger = pino()
+if (!existsSync("./.db")) writeFileSync("./.db", "");
 
-  // Server state
-  let server
-  let serverStarted = false
-  let serverClosing = false
+// -- START -- //
 
-  // Setup error handling
-  function unhandledError (err) {
-    // Log the errors
-    logger.error(err)
+app.engine('html', ejs.renderFile)
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'html')
 
-    // Only clean up once
-    if (serverClosing) {
-      return
-    }
-    serverClosing = true
+app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/*", router);
 
-    // If server has started, close it down
-    if (serverStarted) {
-      server.close(function () {
-        process.exit(1)
-      })
-    }
-  }
-  process.on('uncaughtException', unhandledError)
-  process.on('unhandledRejection', unhandledError)
+// -- END -- //
 
-  // Create the express app
-  const app = express()
 
-  // Template engine
-  app.engine('html', ejs.renderFile)
-  app.set('views', path.join(__dirname, 'views'))
-  app.set('view engine', 'html')
-  
-  // Common middleware
-  // app.use(/* ... */)
-  app.use(pinoHttp({ logger }))
-      
-  // Register routes
-  // @NOTE: require here because this ensures that even syntax errors
-  // or other startup related errors are caught logged and debuggable.
-  // Alternativly, you could setup external log handling for startup
-  // errors and handle them outside the node process.  I find this is
-  // better because it works out of the box even in local development.
-  require('./routes')(app, opts)
-
-  // Common error handlers
-  app.use(function fourOhFourHandler (req, res, next) {
-    next(httpErrors(404, `Route not found: ${req.url}`))
-  })
-  app.use(function fiveHundredHandler (err, req, res, next) {
-    if (err.status >= 500) {
-      logger.error(err)
-    }
-    res.locals.name = 'enkrypton'
-    res.locals.error = err
-    res.status(err.status || 500).render('error')
-  })
-  
-  // Start server
-  server = app.listen(opts.port, opts.host, function (err) {
-    if (err) {
-      return ready(err, app, server)
-    }
-
-    // If some other error means we should close
-    if (serverClosing) {
-      return ready(new Error('Server was closed before it could start'))
-    }
-
-    serverStarted = true
-    const addr = server.address()
-    logger.info(`Started at ${opts.host || addr.host || 'localhost'}:${addr.port}`)
-    ready(err, app, server)
-  })
-}
-
+//  -- SERVER -- //
+const port = process.env.PORT || 8000
+require("http").Server(app).listen(port, "0.0.0.0", () => {
+  console.log(`host: http://localhost:${port}`)
+})
