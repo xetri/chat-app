@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { config } = require("./api");
+const config = require("./api");
 
 for (let keys in config) {
   switch (config[keys].method) {

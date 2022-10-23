@@ -11,7 +11,7 @@ const config = {
   hello: {
     config: hello,
     method: "get",
-  },
+  }
 };
 
-module.exports = { config };
+module.exports = config;
