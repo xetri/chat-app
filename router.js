@@ -1,4 +1,3 @@
-const db = require("./src/_db");
 const router = require("express").Router();
 const routes = require("./src/routes");
 const api = require("./src/api");
