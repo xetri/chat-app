@@ -12,12 +12,6 @@
       defer
     ></script>
     <script defer src="/public/js/auth.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
     <title><%= name %></title>
   </head>
   <body>
@@ -28,6 +22,7 @@
           placeholder="Username"
           name="username"
           id="username"
+          required
           autocomplete="name"
           type="text"
         />
@@ -35,12 +30,15 @@
           class="form-input input-password form-control"
           name="password"
           id="password"
+          required
           autocomplete="password"
           placeholder="********"
           type="password"
         />
+        <span id="warn" class="text text-danger"></span>
         <button
           class="form-button btn-login btn btn-primary w-100"
+          id="login"
           type="submit"
         >
           Login

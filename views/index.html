@@ -11,16 +11,17 @@
       defer
     ></script>
     <script src="/public/js/index.js" defer></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
   </head>
   <body>
     <div class="container">
       <h1><%= name %></h1>
+    </div>
+    <div>
+      <h1>Username: <%= user.username %></h1>
+      <h1>UUID: <%= user.uuid %></h1>
+    </div>
+    <div>
+      <button id="logout" class="btn btn-primary mt-2">Logout</button>
     </div>
   </body>
 </html>

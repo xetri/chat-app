@@ -1,62 +1,128 @@
-const db = require("../_db");
-const event = require("../..");
-const { hashSync, compareSync } = require("bcrypt");
+const crypto = require("crypto");
+const bcryptjs = require("bcryptjs");
+const { PrismaClient } = require("@prisma/client")
+const prisma = new PrismaClient();
 
-function createUser(username, password) {
+// ------------------------------------------ //
+
+
+/* Methods  */
+
+// -- START -- //
+
+const response = (status, result) => ({ status, result })
+
+// -- END -- //
+
+
+// ------------------------------------------ //
+
+/* API routes */
+
+// -- START -- //
+
+async function login(req, res) {
+
   try {
-    db.run(
-      `SELECT username from user WHERE username == "${username}"`,
-      (err, data) => {
-        if (err) throw new Error(err.message);
-        if (!data)
-          db.run(
-            `INSERT INTO user(uid, username, password, time) VALUES("${require("crypto")
-              .randomBytes(16)
-              .toString("hex")}", "${username}", "${hashSync(
-                password,
-                parseInt(process.env.SALT)
-              )}", ${Date.now()})`,
-            (err) => {
-              if (err) throw new Error(err.message);
-            }
-          );
-        return true;
+
+    if (!req.headers.origin || !req.headers.origin.includes(req.headers.host)) return res.status(403).send(response(403, "forbidden"))
+
+    const { username, password } = req.headers
+
+    const user = await prisma.user.findFirst({
+      where: {
+        username: username
+      },
+      select: {
+        uuid: true,
+        username: true,
+        password: true
       }
-    );
-    return true;
+    })
+
+    if (!user) return res.send(response(404, "User not found"))
+
+    const result = bcryptjs.compareSync(password, user.password)
+
+    if (!result) return res.send(response(403, "Invalid credentials"))
+
+    req.session.user = {
+      uuid: user.uuid,
+      username
+    }
+
+    return res.send(response(200, result));
+
   } catch (e) {
-    return false;
+    return res.send(response(500, e.message));
   }
+
 }
 
-const verifyPassword = (password, hash) => compareSync(password, hash);
 
-function login(req, res) {
+async function register(req, res) {
+
   try {
-    if (req.headers.auth != process.env.AUTH) return res.status(403).send(null);
-    const user = req.body;
-    db.get(
-      `SELECT * FROM user WHERE username == "${user.username}"`,
-      (err, data) => {
-        if (err) throw new Error(err.message);
-        if (data) return res.send(verifyPassword(user.password, data.password));
-        return res.status(404).send(null);
+
+    if (!req.headers.origin || !req.headers.origin.includes(req.headers.host)) return res.status(403).send(response(403, "forbidden"))
+
+    const { username, password } = req.headers
+
+    const user = await prisma.user.findFirst({
+      where: {
+        username
+      },
+      select: {
+        uuid: true,
+        username: true,
+        password: true
       }
-    );
+    })
+
+    if (user) return res.send(response(403, "User already exists"))
+
+    const uuid = crypto.randomBytes(16).toString("hex");
+
+    await prisma.user.create({
+      data: {
+        uuid,
+        username,
+        password: bcryptjs.hashSync(password, 3)
+      }
+    })
+
+    req.session.user = {
+      uuid,
+      username
+    }
+
+    return res.send(response(200, true));
+
   } catch (e) {
-    return res.status(500).send(e.message);
+    return res.send(response(500, e.message));
   }
+
 }
 
-function register(req, res) {
+async function logout(req, res) {
+
   try {
-    if (req.headers.auth != process.env.auth) return res.status(403).send(null);
-    const user = req.body;
-    return res.send(createUser(user.username, user.password));
+
+    if (!req.headers.origin || !req.headers.origin.includes(req.headers.host)) return res.status(403).send(response(403, "forbidden"))
+    if (req.session.user) req.session.destroy();
+    return res.status(200).send(true)
+
   } catch (e) {
-    return res.status(500).send(e.message);
+    return res.status(500).send(false)
   }
+
 }
+
+// -- END -- //
+
+
+// ------------------------------------------ //
+
 
 const config = [
   {
@@ -69,6 +135,11 @@ const config = [
     config: register,
     method: "post",
   },
+  {
+    path: "/logout",
+    config: logout,
+    method: "delete"
+  },
 ];
 
-module.exports = config;
+module.exports = { config, prisma };

@@ -2,47 +2,56 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const ejs = require("ejs");
-const router = require("./router");
 const { existsSync, writeFileSync } = require("fs");
-const db = require("./src/_db");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const { prisma } = require("./src/api/api")
+const router = require("./router");
 
 /* configuration */
 
 require("dotenv").config();
-if (!existsSync("./.db")) writeFileSync("./.db", "");
-db.run(
-  "CREATE TABLE IF NOT EXISTS user ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'uid' VARCHAR(25) UNIQUE NOT NULL, 'username' VARCHAR(100) UNIQUE NOT NULL, 'password' VARCHAR(100) NOT NULL, 'time' INTEGER)",
-  (err) => {
-    if (err) throw new Error(err.message);
-  }
-);
+if (!existsSync(path.join(__dirname, ".db"))) {
+  writeFileSync(path.join(__dirname, ".db"), "")
+  require("child_process").execSync("npm run db")
+};
 
-// -- START -- //
+// -- START -- //W
 
 app.engine("html", ejs.renderFile);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "html");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 app.use("/public", express.static(path.join(__dirname, "public")));
-app.use("/", router);
+app.use(require("compression")({
+  level: 6,
+}))
 
-const sessionConfig = {
+app.use(require("express-session")({
+  name: "sid",
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    maxAge: 86400000 * 365,
     httpOnly: true,
-    maxAge: 8640000,
-    signed: true,
-    path: "*",
+    sameSite: true,
+    signed: true
   },
-};
+  store: new PrismaSessionStore(
+    prisma,
+    {
+      checkPeriod: 2 * 60 * 1000,
+      dbRecordIdIsSessionId: true,
+      enableConcurrentSetInvocationsForSameSessionID: true,
+      enableConcurrentTouchInvocationsForSameSessionID: true,
+    }
+  )
+}));
 
-app.use(require("express-session")(sessionConfig));
+app.use(router);
 
 // -- END -- //
 
@@ -51,7 +60,5 @@ const port = process.env.PORT || 8000;
 require("http")
   .Server(app)
   .listen(port, "0.0.0.0", () => {
-    console.log(`host: http://localhost:${port}`);
+    console.log(`http://localhost:${port}`);
   });
-
-module.exports = app;

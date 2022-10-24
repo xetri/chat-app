@@ -83,7 +83,12 @@ dist
 .pnp.*
 
 #misc
-.db
-gc.bat
+
 .http
 .rest
+
+#prisma
+
+.db
+.db-journal
+prisma/migrations/
