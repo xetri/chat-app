@@ -13,15 +13,20 @@
     <script src="/public/js/index.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <h1><%= name %></h1>
-    </div>
-    <div>
-      <h1>Username: <%= user.username %></h1>
-      <h1>UUID: <%= user.uuid %></h1>
-    </div>
-    <div>
-      <button id="logout" class="btn btn-primary mt-2">Logout</button>
-    </div>
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+      <img
+        id="profile"
+        class="navbar-brand btn"
+        src=<%= image %>
+        alt=""
+      />
+      <button
+        id="logout"
+        class="btn btn-outline-success my-2 my-sm-0"
+        type="button"
+      >
+        Logout
+      </button>
+    </nav>
   </body>
 </html>

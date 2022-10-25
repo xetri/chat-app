@@ -4,10 +4,11 @@ const name = "enkrypton";
 function index(req, res) {
 
   const user = req.session.user
-
+  const image = `https://avatars.dicebear.com/api/adventurer/${user.username}.svg`
   return res.render("index", {
     name,
-    user
+    user,
+    image
   });
 }
 
@@ -49,7 +50,7 @@ async function profile(req, res) {
     })
 
     return res.render("profile", {
-      name, user
+      name, user, img: `https://avatars.dicebear.com/api/adventurer/${user.username}.svg`
     })
 
   } catch (e) {

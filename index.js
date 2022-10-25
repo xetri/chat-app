@@ -1,6 +1,8 @@
-const express = require("express");
-const path = require("path");
-const app = express();
+const express = require("express")
+const path = require("path")
+const app = express()
+const http = require("http")
+const server = http.Server(app)
 const ejs = require("ejs");
 const { existsSync, writeFileSync } = require("fs");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
@@ -56,9 +58,10 @@ app.use(router);
 // -- END -- //
 
 //  -- SERVER -- //
+
 const port = process.env.PORT || 8000;
-require("http")
-  .Server(app)
-  .listen(port, "0.0.0.0", () => {
-    console.log(`http://localhost:${port}`);
+
+server.
+  listen(port, "0.0.0.0", () => {
+    console.log(`Port: ${port}`);
   });

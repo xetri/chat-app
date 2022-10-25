@@ -8,5 +8,4 @@ $("#logout").on("click", async () => {
     })
 
     location.replace("/auth")
-
 })

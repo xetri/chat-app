@@ -1,4 +1,12 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+.nav-bar {
+  background: black;
+  padding: 10px;
+}
+.nav-bar .tag {
+  color: white;
+  display: flex;
+}
 
 /*# sourceMappingURL=index.css.map */
