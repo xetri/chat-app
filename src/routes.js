@@ -118,52 +118,7 @@ async function chat(req, res) {
   } catch (e) {
     return res.redirect("/");
   }
-
 }
-
-
-async function profile(req, res) {
-
-  try {
-
-    const self = req.session.user, { username } = req.params
-
-    if (self.username == username) {
-
-      return res.render("profile", {
-        name, user: self, Avatar
-      })
-
-    }
-
-    const user = await prisma.user.findFirst({
-      where: { username },
-      select: {
-        uuid: true,
-        username: true,
-      }
-    })
-
-    if (!user) return res.render("error", {
-      name,
-      auth: true,
-      error: {
-        code: 404,
-        message: `User: ${username} Not found`,
-      },
-
-    })
-
-    return res.render("profile", {
-      name, user, Avatar
-    })
-
-  } catch (e) {
-    return res.redirect("/u")
-  }
-
-}
-
 
 function error(req, res) {
 
@@ -181,4 +136,4 @@ function error(req, res) {
 
 }
 
-module.exports = { index, auth, chat, profile, error };
+module.exports = { index, auth, chat, error };

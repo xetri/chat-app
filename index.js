@@ -61,8 +61,6 @@ app.use(router);
 
 // -- Socket server -- //
 
-// Socket Server configuration
-
 let users = {}
 
 socket.on("connection", function (client) {
