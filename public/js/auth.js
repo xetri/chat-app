@@ -1,8 +1,8 @@
 $("form").on("submit", async (e) => {
   e.preventDefault();
 
-  const username = $("#username").val()
-  const password = $("#password").val()
+  const username = $("#username").val().toString().toLowerCase().replaceAll(" ", "");
+  const password = $("#password").val().toString().trim();
 
   try {
     const res = await fetch("/api/login", {
@@ -27,8 +27,8 @@ $("form").on("submit", async (e) => {
 
 $("#register").on("click", async function () {
 
-  const username = $("#username").val()
-  const password = $("#password").val()
+  const username = $("#username").val().toString().toLowerCase().replaceAll(" ", "");
+  const password = $("#password").val().toString().trim();
 
   if (username.length == 0 || password.length == 0) return;
 

@@ -20,8 +20,12 @@ const auth = (req, res, next) => {
 // -- START -- //
 
 router.get("/", auth, routes.index);
+
+router.get("/dm/:chatter", auth, routes.chat);
+
+router.get("/u/:username", auth, routes.profile);
+
 router.get("/auth", redirect, routes.auth);
-router.get("/u/:username", routes.profile);
 
 // -- redirect -- //
 
@@ -31,6 +35,7 @@ router.get("/register", redirect, (req, res) => res.redirect("/auth"));
 router.get("/u", auth, (req, res) => {
     return res.redirect(`/u/${req.session.user.username}`)
 })
+
 
 router.get("/:username", auth, (req, res) => {
     const { username } = req.params

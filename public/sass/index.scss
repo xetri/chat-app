@@ -4,9 +4,43 @@
 .nav-bar {
   background: black;
   padding: 10px;
+}
 
-  .tag {
-    color: white;
-    display: flex;
+.img-user {
+  height: 68px;
+  width: 68px;
+  margin-right: 20px;
+  padding: 0.5px;
+}
+
+.user-item img,
+.user-item span {
+  display: inline-block;
+}
+
+.user-item span {
+  font-size: 150%;
+}
+
+.box {
+  .searchBar {
+    #search {
+      padding: 10px;
+    }
+  }
+
+}
+
+.list {
+  margin-top: 10px;
+  min-height: 400px;
+  height: auto;
+}
+
+li{
+  cursor: pointer;
+
+  &:hover{
+    background-color: #0f0f0f;
   }
 }

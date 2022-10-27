@@ -1,15 +1,37 @@
 const { prisma } = require("./api/api")
+
 const name = "enkrypton";
+const Avatar = (username) => `https://avatars.dicebear.com/api/adventurer/${username}.svg`;
+const days = (timestamp) => {
+  let diff = Date.now() - timestamp;
+  return Math.floor(diff / (86400000));
+}
 
-function index(req, res) {
+async function index(req, res) {
 
-  const user = req.session.user
-  const image = `https://avatars.dicebear.com/api/adventurer/${user.username}.svg`
-  return res.render("index", {
-    name,
-    user,
-    image
-  });
+  try {
+    const user = req.session.user
+    const list = await prisma.user.findMany({
+      where: {
+        NOT: {
+          username: user.username
+        }
+      },
+      select: {
+        username: true
+      }
+    })
+    return res.render("index", {
+      name,
+      user,
+      Avatar,
+      list
+    });
+
+  } catch (e) {
+    return res.redirect("/");
+  }
+
 }
 
 function auth(req, res) {
@@ -18,16 +40,82 @@ function auth(req, res) {
   });
 }
 
+async function chat(req, res) {
+
+  try {
+
+    const user = req.session.user, { chatter } = req.params;
+
+    if (user.username == chatter) return res.render("error", {
+      name,
+      auth: true,
+      error: {
+        code: 404,
+        message: `Not found`,
+      },
+    }
+    )
+
+    const dm = await prisma.user.findFirst({
+      where: {
+        username: chatter
+      },
+      select: {
+        username: true,
+      }
+    })
+
+    if (!dm) return res.render("error", {
+      name,
+      auth: true,
+      error: {
+        code: 404,
+        message: `Not found`,
+      },
+    })
+
+    const chats = await prisma.mail.findMany({
+      where: {
+        OR:
+          [{
+            from: dm.username,
+            to: user.username
+          },
+          {
+            from: user.username,
+            to: dm.username
+          }]
+      }, orderBy: {
+        created: "asc"
+      }, select: {
+        from: true,
+        to: true,
+        body: true,
+        created: true
+      }
+    })
+
+    return res.render("chat", {
+      name, user, Avatar, chatter, chats, days
+    })
+
+  } catch (e) {
+    return res.redirect("/");
+  }
+
+}
+
 
 async function profile(req, res) {
 
-  const self = req.session.user, { username } = req.params
-
   try {
+
+    const self = req.session.user, { username } = req.params
+
     if (self.username == username) {
 
       return res.render("profile", {
-        name, user: self
+        name, user: self, Avatar
       })
     }
 
@@ -50,7 +138,7 @@ async function profile(req, res) {
     })
 
     return res.render("profile", {
-      name, user, img: `https://avatars.dicebear.com/api/adventurer/${user.username}.svg`
+      name, user, Avatar
     })
 
   } catch (e) {
@@ -61,6 +149,7 @@ async function profile(req, res) {
 
 
 function error(req, res) {
+
   let auth = false;
   if (req.session.user) auth = true;
 
@@ -75,4 +164,4 @@ function error(req, res) {
 
 }
 
-module.exports = { index, auth, profile, error };
+module.exports = { index, auth, chat, profile, error };

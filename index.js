@@ -37,7 +37,7 @@ app.use(require("express-session")({
   resave: true,
   saveUninitialized: false,
   cookie: {
-    maxAge: 86400000 * 365,
+    maxAge: 86400 * 365 * 1000,
     httpOnly: true,
     sameSite: true,
     signed: true
@@ -63,5 +63,5 @@ const port = process.env.PORT || 8000;
 
 server.
   listen(port, "0.0.0.0", () => {
-    console.log(`Port: ${port}`);
+    console.log(`Listening on PORT: ${server.address().port}`);
   });

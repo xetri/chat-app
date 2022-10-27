@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/public/favicon.png" />
+    <link rel="stylesheet" href="/public/css/chat.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="/public/js/chat.js" defer></script>
+    <title><%= chatter %> | Inbox </title>
+  </head>
+  <body>
+    
+    <!-- <nav class="navbar fixed-top d-flex navbar-dark bg-dark justify-content-between">
+      <div class="mx-2">
+        <img
+          class="rounded-circle border"
+          src=<%= Avatar(user.username) %>
+        alt="" width="48" height="48">
+        <span class="text text-white flex-start mx-2"
+          ><%= user.username %></span
+        >
+      </div>
+      <button
+        id="home"
+        class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0"
+        type="button"
+      >
+        <span class="text text-white">Home</span>
+      </button>
+    </nav> -->
+
+    <nav class="navbar p-2 fixed-top navbar-dark bg-dark d-block">
+      <div class="d-flex mx-2 align-items-center">
+        <div class="position-relative">
+          <img 
+          class="rounded-circle border mr-1" alt="" width="40" height="40"
+          src=<%= Avatar(chatter) %>>
+        </div>
+        <div class="flex-grow-1 mx-2 pl-3">
+          <span class="text mx-1 text-white"><b><%= chatter %></b></span>
+          <span><i class="bi bi-circle-fill"></i></span>
+        </div>
+          <button id="home" class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0" type="button">
+          <span class="text text-white">Home</span></button>
+      </div>
+    </nav>
+
+    <main class="container-fluid">
+			<div class="row">
+					<div>
+						<div class="chat-messages px-4 py-3">
+
+              <% chats.forEach(chat =>{ %>
+                
+                <!-- <span class="text text-muted text-center">
+                  <% 
+                  let day = days(chat.created)
+                  if(day > 1){
+                  %>
+                  <%= day %> days ago
+                  <% } else if(day == 1) { %>
+                    Yesterday
+                  <% } else { %>
+                      Today
+                  <% } %>
+                </span> -->
+                
+                  <% if(chat.from == user.username) { %>
+                  
+                  <div class="chat-message-right pb-4">
+                    <div>
+                      <img src=<%= Avatar(chat.from) %>
+                      class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
+                    </div>
+                    <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
+                      <div class="font-weight-bold mb-1 text text-light"><em><%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %></em></div>
+                      <span><b><%= chat.body %></b></span>
+                    </div>
+                  </div>
+
+                <% } else { %>
+
+                <div class="chat-message-left pb-4">
+                  <div>
+                    <img 
+                    src=<%= Avatar(chat.from) %>
+                    class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
+                    <div class="small text-nowrap"><b><%= chat.from %></b></div>
+                  </div>
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 mx-3">
+                    <div class="mb-1"><em><%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })  %></em></div>
+                    <span><b><%= chat.body %></b></span>
+                  </div>
+                </div>
+
+                <% } 
+              }) %>
+
+              <span id="resort"></span> <!-- for ref to scroll -->
+					
+            </div>
+		</div>
+  </div>
+
+    <form id="mail" class="form bg bg-light fixed-bottom py-2 input-group">
+      <input id="input" type="text" class="form-control p-2 m-2" placeholder="Enter your message"/>
+    <button type="submit" class="btn button rounded btn-outline-dark mx-2">
+    Send
+    </button>
+  </form>
+
+</main>
+</body>
+</html>

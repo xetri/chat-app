@@ -16,6 +16,14 @@ model User {
   password String
 }
 
+model Mail {
+  id      Int      @id @default(autoincrement())
+  created DateTime @default(now())
+  from    String
+  to      String
+  body    String
+}
+
 model Session {
   id        String   @id
   sid       String   @unique
