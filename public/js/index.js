@@ -1,16 +1,4 @@
-$("li").on("click", (e) => location.replace(`/dm/${e.target.id}`))
-
-// -- last resort --//
-
-
-// $("#searchInput").on("input", function (e) {
-//     const value = e.target.value.toLowerCase();
-//     //list all on empty
-//     if (value === "") { }    
-// })
-
-
-// -- logout -- //
+$("li").on("click", (e) => location.replace(`/${e.target.id}`))
 
 $("#logout").on("click", () => {
 

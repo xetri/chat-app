@@ -1,8 +1,4 @@
-const socket = io({
-  query: {
-    user: client
-  }
-})
+const socket = io()
 
 function animationScroll() {
   $('body,html').animate({ scrollTop: document.body.scrollHeight });
@@ -47,8 +43,10 @@ function received(username, message, created) {
 
 socket.on("mail", function (data) {
 
-  $("#chats").append(received(data.from, data.body, data.created))
-  animationScroll();
+  if(data.from == receiver && data.to == client){
+    $("#chats").append(received(data.from, data.body, data.created))
+    animationScroll();
+  }
 
 })
 

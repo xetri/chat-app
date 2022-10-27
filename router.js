@@ -20,13 +20,14 @@ const auth = (req, res, next) => {
 
 router.get("/", auth, routes.index);
 
-router.get("/:chatter", auth, routes.chat);
-
 router.get("/auth", redirect, routes.auth);
+
+router.get("/:chatter", auth, routes.chat);
 
 // -- redirect -- //
 
 router.get("/login", redirect, (req, res) => res.redirect("/auth"));
+
 router.get("/register", redirect, (req, res) => res.redirect("/auth"));
 
 // -- END -- //

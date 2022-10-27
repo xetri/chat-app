@@ -4,12 +4,19 @@
     <title><%= name %></title>
     <link rel="icon" type="image/png" href="/public/favicon.png" />
     <link rel="stylesheet" href="/public/css/error.css" />
-    <script src="/public/js/error.js" defer></script>
   </head>
   <body>
-    <div class="container">
+    <script defer>
+      let auth = '<%= auth %>'
+    </script>
+    <div class="container mt-4">
       <h1>Error: <%= error.status || error.code %></h1>
       <p><%= error.message %></p>
-    </div>
-  </body>
+      <button id="save" class="btn btn-dark w-100 mt-4" type="button">
+        <% if(auth) { %> Back to home
+          <% } else { %> Login <% } %>
+        </button>
+      </div>
+    </body>
+    <script src="/public/js/error.js" defer></script>
 </html>

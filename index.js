@@ -61,12 +61,11 @@ app.use(router);
 
 // -- Socket server -- //
 
-let users = {}
-
+// let users = {}
 socket.on("connection", function (client) {
 
-  const user = client.handshake.query.user
-  users[user] = client.id
+  // const user = client.handshake.query.user
+  // users[user] = client.id
 
   client.on("mail", async function (mail) {
 
@@ -77,7 +76,9 @@ socket.on("connection", function (client) {
       body: mail.body,
     }
 
-    socket.to(users[data.to]).emit("mail", data)
+    // socket.to(users[data.to]).emit("mail", data)
+    
+  client.broadcast.emit("mail", data)
 
     await prisma.mail.create({
       data,
@@ -86,6 +87,10 @@ socket.on("connection", function (client) {
     })
 
   })
+
+  // client.on("disconnect", function(){
+    // delete users[user]
+  // })
 
 })
 

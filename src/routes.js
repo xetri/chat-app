@@ -66,8 +66,8 @@ async function chat(req, res) {
       name,
       auth: true,
       error: {
-        code: 404,
-        message: `Not found`,
+        code: 403,
+        message: `Forbidden`,
       },
     }
     )
@@ -86,7 +86,7 @@ async function chat(req, res) {
       auth: true,
       error: {
         code: 404,
-        message: `User - ${chatter} Not found`,
+        message: `User: ${chatter} not found`,
       },
     })
 

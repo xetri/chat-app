@@ -4,71 +4,50 @@
     <title><%= name %></title>
     <link rel="icon" type="image/png" href="/public/favicon.png" />
     <link rel="stylesheet" href="/public/css/index.css" />
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.min.js"
-      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-      crossorigin="anonymous"
-      defer
-    ></script>
-    <script src="/public/js/index.js" defer></script>
+    <script src="/public/min/jquery.min.js" defer></script>
   </head>
   <body>
-      <nav class="navbar d-flex navbar-dark bg-dark justify-content-between">
-        <div class="mx-2">
-          <img
-            class="rounded-circle border"
-            src=<%= Avatar(user.username) %>
-          alt="" width="48" height="48">
-          <span class="text text-white flex-start mx-2"
-            ><%= user.username %></span
-          >
-        </div>
-        <button
-          id="logout"
-          class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0"
-          type="button"
+    <nav class="navbar d-flex navbar-dark bg-dark justify-content-between">
+      <div class="mx-2">
+        <img
+          class="rounded-circle border"
+          src=<%= Avatar(user.username) %>
+        alt="" width="48" height="48">
+        <span class="text text-white flex-start mx-2"
+          ><%= user.username %></span
         >
-          <span class="text text-white">Logout</span>
-        </button>
-      </nav>
-  
-      <main class="box container my-4">
-  
-        <!-- // -- PROMISE || REJECT (search bar)
-          <div class="searchBar d-flex my-4">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search"
-            class="form-control p-2"
-          />
-          <button class="btn btn-primary mx-2" id="searchBtn" type="button">
-                  <i class="bi bi-search i"></i>
-          </button>
-        </div>
-   -->
-        <div class="list">
-          <ul id="grp" class="list-group">        
-              <% list.forEach( val =>{ %>
-  
-                <li
-                  class="list-group-item user-item border border-dark mb-2"
-                  id=<%= val.username %>
-                  >
-                      <img
-                      class="img-user rounded-circle border border-primary"
-                      src=<%= Avatar(val.username) %>
-                      id=<%= val.username %>
-                      >
-                      <span class="text text-primary"
-                      id=<%= val.username %>
-                      ><%= val.username %></span>
-                  </li>
-  
-            
-              <% }) %>
-          </ul>
-        </div>
-      </main>
+      </div>
+      <button
+        id="logout"
+        class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0"
+        type="button"
+      >
+        <span class="text text-white">Logout</span>
+      </button>
+    </nav>
+
+    <main class="box container my-4">
+      <div class="list">
+        <ul id="grp" class="list-group">
+          <% list.forEach( val =>{ %>
+
+          <li
+            class="list-group-item user-item border border-dark mb-2"
+            id=<%= val.username %>
+            >
+            <img
+              class="img-user rounded-circle border border-primary"
+              src=<%= Avatar(val.username) %>
+            id=<%= val.username %> >
+            <span class="text text-primary" id=<%= val.username %>
+              ><%= val.username %></span
+            >
+          </li>
+
+          <% }) %>
+        </ul>
+      </div>
+    </main>
   </body>
+    <script src="/public/js/index.js" defer></script>
 </html>
