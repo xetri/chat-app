@@ -2,10 +2,27 @@ const { prisma } = require("./api/api")
 
 const name = "enkrypton";
 const Avatar = (username) => `https://avatars.dicebear.com/api/adventurer/${username}.svg`;
-const days = (timestamp) => {
-  let diff = Date.now() - timestamp;
-  return Math.floor(diff / (86400000));
+
+const time = (timestamp) => {
+  
+  const dateConv = (diff) => Math.floor(diff / (86400000));
+  let day, date = new Date(timestamp).getDay(), diff = Date.now() - timestamp;
+  let ref = dateConv(diff);
+
+  if(ref == 0){
+    if(date == new Date().getDay()) day = "Today"
+    else day = "Yesterday"
+  }
+  else if(ref == 1){
+    if(date == new Date().getDay() + 1) day = "Yesterday"
+    else day = "1 day ago"
+  } 
+  else day = `${ref} days ago`
+  
+  return day;
 }
+
+
 
 async function index(req, res) {
 
@@ -43,7 +60,6 @@ function auth(req, res) {
 async function chat(req, res) {
 
   try {
-
     const user = req.session.user, { chatter } = req.params;
 
     if (user.username == chatter) return res.render("error", {
@@ -70,7 +86,7 @@ async function chat(req, res) {
       auth: true,
       error: {
         code: 404,
-        message: `Not found`,
+        message: `User - ${chatter} Not found`,
       },
     })
 
@@ -96,7 +112,7 @@ async function chat(req, res) {
     })
 
     return res.render("chat", {
-      name, user, Avatar, chatter, chats, days
+      name, user, Avatar, chatter, chats, time
     })
 
   } catch (e) {
@@ -117,6 +133,7 @@ async function profile(req, res) {
       return res.render("profile", {
         name, user: self, Avatar
       })
+
     }
 
     const user = await prisma.user.findFirst({

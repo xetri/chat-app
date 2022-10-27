@@ -11,7 +11,7 @@ model User {
   id       Int      @id @default(autoincrement())
   created  DateTime @default(now())
   updated  DateTime @updatedAt
-  uuid     String   @unique
+  uuid     String   @unique @default(uuid())
   username String   @unique
   password String
 }
