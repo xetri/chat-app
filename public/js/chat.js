@@ -9,6 +9,7 @@ function animationScroll() {
 }
 
 const time = (timestamp) => {
+  
   const dateConv = (diff) => Math.floor(diff / (86400000));
   let day, date = new Date(timestamp).getDay(), diff = Date.now() - timestamp;
   let ref = dateConv(diff);
