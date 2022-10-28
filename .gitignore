@@ -83,15 +83,15 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#misc
+#vim
+.sessions/
+.undo/
+.backup/
 
 .http
 .rest
-.sessions/
-.undo/
 
 #prisma
-
-.db
-.db-journal
 prisma/migrations/
+.db-journal
+.db

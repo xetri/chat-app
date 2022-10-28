@@ -5,6 +5,10 @@ $("form").on("submit", async (e) => {
   const password = $("#password").val().toString().trim();
 
   try {
+
+    if (username.length == 0 || password.length == 0) return;
+    if (username.length > 191 || password.length > 191) throw new Error("Credentials length too long")
+
     const res = await fetch("/api/login", {
       method: "POST",
       credentials: "same-origin",
@@ -34,7 +38,8 @@ $("#register").on("click", async function () {
 
   try {
 
-    if(username == name || username == "global") throw new Error("Forbidden 403")
+    if (username == name.toLowerCase() || username == "global") throw new Error("Forbidden 403")
+    if (username.length > 191 || password.length > 191) throw new Error("Credentials length too long")
 
     const res = await fetch("/api/register", {
       method: "POST",

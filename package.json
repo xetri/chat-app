@@ -12,9 +12,7 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon",
-    "build": "npm run db && npm run sass",
-    "sass": "sass -w public/sass:public/css",
-    "db": "prisma migrate dev --name init"
+    "sass": "sass -w public/sass:public/css"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",

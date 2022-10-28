@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model User {
@@ -12,7 +14,7 @@ model User {
   created  DateTime @default(now())
   updated  DateTime @updatedAt
   uuid     String   @unique @default(uuid())
-  username String   @unique
+  username String
   password String
 }
 
@@ -21,12 +23,12 @@ model Mail {
   created DateTime @default(now())
   from    String
   to      String
-  body    String
+  body    String   @db.Text
 }
 
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String
+  data      String   @db.TinyText
   expiresAt DateTime
 }

@@ -4,7 +4,6 @@ const app = express()
 const http = require("http")
 const server = http.Server(app)
 const ejs = require("ejs")
-const { existsSync, writeFileSync } = require("fs")
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
 const { prisma } = require("./src/api/api")
 const router = require("./router")
@@ -14,10 +13,6 @@ const socket = new io.Server(server)
 /* configuration */
 
 require("dotenv").config();
-if (!existsSync(path.join(__dirname, ".db"))) {
-  writeFileSync(path.join(__dirname, ".db"), "")
-  require("child_process").execSync("npm run db")
-};
 
 // -- START -- //
 
@@ -34,7 +29,7 @@ app.use(require("compression")({
 }))
 
 app.use(require("express-session")({
-  name: "s.id",
+  name: "sid",
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
@@ -47,7 +42,7 @@ app.use(require("express-session")({
   store: new PrismaSessionStore(
     prisma,
     {
-      checkPeriod: 2145699655,
+      checkPeriod: 30 * 24 * 86400,
       dbRecordIdIsSessionId: true
     }
   )
@@ -61,13 +56,9 @@ app.use(router);
 
 // -- Socket server -- //
 
-// let users = {}
 socket.on("connection", function (client) {
 
-  // const user = client.handshake.query.user
-  // users[user] = client.id
-
-  client.on("global", function (mail){
+  client.on("global", function (mail) {
 
     const data = {
       created: mail.created,
@@ -81,31 +72,23 @@ socket.on("connection", function (client) {
   })
 
   client.on("mail", async function (mail) {
-    
+
     const data = {
       created: mail.created,
       from: mail.from,
       to: mail.to,
       body: mail.body,
     }
-    
-    // socket.to(users[data.to]).emit("mail", data)
-    
-    // client.broadcast.emit("mail", data)
 
     socket.emit("mail", data)
-    
+
     await prisma.mail.create({
       data,
     }).catch(function (err) {
       console.log(err.message);
     })
-    
+
   })
-  
-  // client.on("disconnect", function(){
-    // delete users[user]
-  // })
 
 })
 
