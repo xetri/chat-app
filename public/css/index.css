@@ -1,7 +1,7 @@
 @import url("/public/min/bootstrap.min.css");
-.nav-bar {
-  background: black;
-  padding: 10px;
+body {
+  padding: 60px 0;
+  height: 100%;
 }
 
 .img-user {
@@ -20,14 +20,8 @@
   font-size: 150%;
 }
 
-.box .searchBar #search {
-  padding: 10px;
-}
-
 .list {
   margin-top: 10px;
-  min-height: 400px;
-  height: auto;
 }
 
 li {
@@ -35,6 +29,10 @@ li {
 }
 li:hover {
   background-color: #0f0f0f;
+}
+
+body::-webkit-scrollbar {
+  width: 0.75em;
 }
 
 body::-webkit-scrollbar-track {
@@ -45,6 +43,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 20px;
   border: 6px solid #99AAb5;
   background-clip: content-box;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 /*# sourceMappingURL=index.css.map */

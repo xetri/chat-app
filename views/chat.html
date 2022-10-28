@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= chatter %> | Inbox </title>
-    <link rel="icon" type="image/png" href="/public/favicon.png" />
+    <title><%= chatter.toUpperCase() %> | Inbox </title>
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
     <link rel="stylesheet" href="/public/css/chat.css" />
     <script src="/public/min/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -17,7 +17,7 @@
       let chatter = '<%= chatter %>'
     </script>
     
-    <nav class="navbar p-2 fixed-top navbar-dark bg-dark d-block">
+    <nav class="navbar fixed-top navbar-dark bg-dark d-block">
       <div class="d-flex mx-2 align-items-center">
         <div class="position-relative">
           <img 
@@ -45,7 +45,7 @@
                       <img src=<%= Avatar(chat.from) %>
                       class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
                     <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
-                      <div class="mb-1"><em> <%= time(chat.created) %> at <%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %> </em></div>
+                      <div class="mb-1"><em> <%= time(chat.created) %> at <%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' ,hour12: true }) %> </em></div>
                       <b> <%= chat.body %> </b>
                     </div>
                   </div>
@@ -60,7 +60,7 @@
                     <div class="small text-nowrap"><b><%= chat.from %></b></div>
                   </div>
                   <div class="flex-shrink-1 bg-light rounded py-2 px-3 mx-3">
-                    <div class="mb-1"><em> <%= time(chat.created) %> at <%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %> </em></div>
+                    <div class="mb-1"><em> <%= time(chat.created) %> at <%= new Date(chat.created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' ,hour12: true }) %> </em></div>
                     <b> <%= chat.body %> </b>
                   </div>
                 </div>

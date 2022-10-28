@@ -8,7 +8,7 @@ const time = (timestamp) => {
   let day, date = new Date(timestamp).getDay(), diff = Date.now() - timestamp;
   let ref = dateConv(diff);
 
-  if (ref == 0) {
+  if (ref <= 0) {
     if (date == new Date().getDay()) day = "Today"
     else day = "Yesterday"
   }
@@ -138,7 +138,7 @@ function error(req, res) {
     auth,
     error: {
       code: 404,
-      message: "Not found",
+      message: "Page Not found",
     },
   });
 

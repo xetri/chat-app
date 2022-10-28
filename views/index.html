@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= name %></title>
-    <link rel="icon" type="image/png" href="/public/favicon.png" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
     <link rel="stylesheet" href="/public/css/index.css" />
+    <title><%= name %></title>
   </head>
   <body>
-    <nav class="navbar d-flex navbar-dark bg-dark justify-content-between">
-      <div class="mx-2">
-        <img
-          class="rounded-circle border"
-          src=<%= Avatar(user.username) %>
-        alt="" width="48" height="48">
+    <nav class="navbar d-flex navbar-dark bg-dark fixed-top d-block justify-content-between">
+      <div class="mx-2 d-flex align-items-center">
+        <div class="position-relative">
+          <img
+            class="rounded-circle border"
+            src=<%= Avatar(user.username) %>
+          alt="" width="48" height="48">
+        </div>
         <span class="text text-white flex-start mx-2"
           ><%= user.username %></span
         >
@@ -25,19 +30,19 @@
       </button>
     </nav>
 
-    <main class="box container my-4">
+    <main class="container my-4">
       <div class="list">
-        <ul id="grp" class="list-group">
-          
+        <ul class="list-group">
+
           <li
             class="list-group-item user-item border border-dark mb-4"
-            id=<%= name %>
+            id='global'
             >
             <img
               class="img-user rounded-circle"
-              src="https://cdn-icons-png.flaticon.com/512/1383/1383676.png"
-            id=<%= name %> >
-            <span class="text text-primary" id=<%= name %>
+              src="/public/favicon.png"
+            id='global' >
+            <span class="text text-primary" id='global'
               >Global</span
             >
           </li>
@@ -61,6 +66,7 @@
         </ul>
       </div>
     </main>
+
     <script src="/public/min/jquery.min.js"></script>
     <script src="/public/js/index.js"></script>
   </body>

@@ -8,7 +8,7 @@ const time = (timestamp) => {
   let day, date = new Date(timestamp).getDay(), diff = Date.now() - timestamp;
   let ref = dateConv(diff);
 
-  if (ref == 0) {
+  if (ref <= 0) {
     if (date == new Date().getDay()) day = "Today"
     else day = "Yesterday"
   }
@@ -76,6 +76,7 @@ $(document).ready(function () {
     e.preventDefault();
 
     const value = $("#input").val().toString().trim()
+    if(value.length == 0) return;
     let stamp = new Date()
 
     // $("#chats").append(

@@ -22,7 +22,7 @@ router.get("/", auth, routes.index);
 
 router.get("/auth", redirect, routes.auth);
 
-router.get(`/${routes.name}`, auth, routes.global);
+router.get(`/global`, auth, routes.global);
 
 router.get("/:chatter", auth, routes.chat);
 
