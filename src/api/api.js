@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const bcryptjs = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient();
@@ -75,17 +74,13 @@ async function register(req, res) {
       select: {
         uuid: true,
         username: true,
-        password: true
       }
     })
 
     if (user) return res.send(response(403, "User already exists"))
 
-    const uuid = crypto.randomBytes(16).toString("hex");
-
-    await prisma.user.create({
+    const { uuid } = await prisma.user.create({
       data: {
-        uuid,
         username,
         password: bcryptjs.hashSync(password, 3)
       }
