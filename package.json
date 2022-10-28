@@ -1,19 +1,14 @@
 {
-  "name": "enkrypton",
+  "name": "taseract",
   "version": "1.0.0",
-  "description": "Crypto trading app",
+  "description": "Chat App",
   "author": "Avrel3",
   "keywords": [
-    "blockchain",
-    "crypto",
-    "trading"
+    "chatting",
+    "Chat App"
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Avrel3/enkrypton.git"
-  },
   "scripts": {
     "start": "node .",
     "dev": "nodemon",

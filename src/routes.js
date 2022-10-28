@@ -1,5 +1,5 @@
 const { prisma } = require("./api/api")
-const name = "enkrypton";
+const name = "Taseract";
 const Avatar = (username) => `https://avatars.dicebear.com/api/adventurer/${username}.svg`;
 
 const time = (timestamp) => {
