@@ -1,3 +1,3 @@
-# Encrypton
+# Taseract
 
-- Crypto trading App
+- Chatting App
