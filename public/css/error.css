@@ -1,3 +1,12 @@
 @import url("/public/min/bootstrap.min.css");
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 6px solid #99aab5;
+  background-clip: content-box;
+}
 
 /*# sourceMappingURL=error.css.map */

@@ -4,7 +4,6 @@
     <title><%= name %></title>
     <link rel="icon" type="image/png" href="/public/favicon.png" />
     <link rel="stylesheet" href="/public/css/index.css" />
-    <script src="/public/min/jquery.min.js" defer></script>
   </head>
   <body>
     <nav class="navbar d-flex navbar-dark bg-dark justify-content-between">
@@ -29,6 +28,20 @@
     <main class="box container my-4">
       <div class="list">
         <ul id="grp" class="list-group">
+          
+          <li
+            class="list-group-item user-item border border-dark mb-4"
+            id=<%= name %>
+            >
+            <img
+              class="img-user rounded-circle"
+              src="https://cdn-icons-png.flaticon.com/512/1383/1383676.png"
+            id=<%= name %> >
+            <span class="text text-primary" id=<%= name %>
+              >Global</span
+            >
+          </li>
+
           <% list.forEach( val =>{ %>
 
           <li
@@ -48,6 +61,7 @@
         </ul>
       </div>
     </main>
+    <script src="/public/min/jquery.min.js"></script>
+    <script src="/public/js/index.js"></script>
   </body>
-    <script src="/public/js/index.js" defer></script>
 </html>

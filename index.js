@@ -67,7 +67,7 @@ socket.on("connection", function (client) {
   // const user = client.handshake.query.user
   // users[user] = client.id
 
-  client.on("mail", async function (mail) {
+  client.on("global", function (mail){
 
     const data = {
       created: mail.created,
@@ -76,18 +76,33 @@ socket.on("connection", function (client) {
       body: mail.body,
     }
 
+    socket.emit("global", data)
+
+  })
+
+  client.on("mail", async function (mail) {
+    
+    const data = {
+      created: mail.created,
+      from: mail.from,
+      to: mail.to,
+      body: mail.body,
+    }
+    
     // socket.to(users[data.to]).emit("mail", data)
     
-  client.broadcast.emit("mail", data)
+    // client.broadcast.emit("mail", data)
 
+    socket.emit("mail", data)
+    
     await prisma.mail.create({
       data,
     }).catch(function (err) {
       console.log(err.message);
     })
-
+    
   })
-
+  
   // client.on("disconnect", function(){
     // delete users[user]
   // })

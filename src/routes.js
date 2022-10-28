@@ -1,27 +1,25 @@
 const { prisma } = require("./api/api")
-
 const name = "enkrypton";
 const Avatar = (username) => `https://avatars.dicebear.com/api/adventurer/${username}.svg`;
 
 const time = (timestamp) => {
-  
+
   const dateConv = (diff) => Math.floor(diff / (86400000));
   let day, date = new Date(timestamp).getDay(), diff = Date.now() - timestamp;
   let ref = dateConv(diff);
 
-  if(ref == 0){
-    if(date == new Date().getDay()) day = "Today"
+  if (ref == 0) {
+    if (date == new Date().getDay()) day = "Today"
     else day = "Yesterday"
   }
-  else if(ref == 1){
-    if(date == new Date().getDay() + 1) day = "Yesterday"
+  else if (ref == 1) {
+    if (date == new Date().getDay() + 1) day = "Yesterday"
     else day = "1 day ago"
-  } 
+  }
   else day = `${ref} days ago`
-  
+
   return day;
 }
-
 
 
 async function index(req, res) {
@@ -57,12 +55,22 @@ function auth(req, res) {
   });
 }
 
+async function global(req, res) {
+
+  const { user } = req.session
+
+  return res.render("global", {
+    name, user, Avatar, time
+  })
+  
+}
+
 async function chat(req, res) {
 
   try {
     const user = req.session.user, { chatter } = req.params;
 
-    if (user.username == chatter) return res.render("error", {
+    if (user.username == chatter) return res.status(403).render("error", {
       name,
       auth: true,
       error: {
@@ -81,7 +89,7 @@ async function chat(req, res) {
       }
     })
 
-    if (!dm) return res.render("error", {
+    if (!dm) return res.status(404).render("error", {
       name,
       auth: true,
       error: {
@@ -136,4 +144,4 @@ function error(req, res) {
 
 }
 
-module.exports = { index, auth, chat, error };
+module.exports = { index, auth, global, chat, error, name };

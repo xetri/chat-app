@@ -1,5 +1,3 @@
-const socket = io()
-
 function animationScroll() {
   $('body,html').animate({ scrollTop: document.body.scrollHeight });
 }
@@ -25,6 +23,22 @@ const time = (timestamp) => {
 
 const Avatar = (username) => `https://avatars.dicebear.com/api/adventurer/${username}.svg`;
 
+function sent (username, message, created){
+
+  return $("#chats").append(
+    `<div class="chat-message-right pb-4">
+          <div>
+            <img src=${Avatar(username)}
+            class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
+          </div>
+          <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
+            <div class="mb-1"><em> ${time(new Date(created).getTime())} at ${new Date(created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} </em></div>
+            <b> ${message} </b>
+          </div>
+        </div>`
+  )
+}
+
 function received(username, message, created) {
 
   return `<div class="chat-message-left pb-4">
@@ -34,7 +48,7 @@ function received(username, message, created) {
       <div class="small text-nowrap"> <b> ${username} </b> </div>
     </div>
     <div class="flex-shrink-1 bg-light rounded py-2 px-3 mx-3">
-      <div class="mb-1"> <em> ${time(new Date(created).getTime())} at ${new Date(created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} </em> </div>
+      <div class="mb-1"> <em> ${time(new Date(created).getTime())} at ${new Date(created).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} </em> </div>
       <b> ${message} </b>
     </div>
   </div>`
@@ -43,8 +57,11 @@ function received(username, message, created) {
 
 socket.on("mail", function (data) {
 
-  if(data.from == receiver && data.to == client){
+  if( data.from == chatter && data.to == client ){
     $("#chats").append(received(data.from, data.body, data.created))
+    animationScroll();
+  }else if (data.from == client && data.to == chatter){
+    $("#chats").append(sent(data.from, data.body, data.created))
     animationScroll();
   }
 
@@ -61,29 +78,30 @@ $(document).ready(function () {
     const value = $("#input").val().toString().trim()
     let stamp = new Date()
 
-    $("#chats").append(
-      `<div class="chat-message-right pb-4">
-            <div>
-              <img src=${Avatar(client)}
-              class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
-            </div>
-            <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
-              <div class="mb-1"><em> ${time(stamp)} at ${new Date(stamp).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} </em></div>
-              <b> ${value} </b>
-            </div>
-          </div>`
-    )
+    // $("#chats").append(
+    //   `<div class="chat-message-right pb-4">
+    //         <div>
+    //           <img src=${Avatar(client)}
+    //           class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
+    //         </div>
+    //         <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
+    //           <div class="mb-1"><em> ${time(stamp)} at ${new Date(stamp).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} </em></div>
+    //           <b> ${value} </b>
+    //         </div>
+    //       </div>`
+    // )
 
-    $("#input").val("")
-
-    animationScroll()
+    
+    // animationScroll()
 
     socket.emit("mail", {
       from: client,
-      to: receiver,
+      to: chatter,
       body: value,
       created: stamp,
     })
+
+    $("#input").val("")
 
   })
 

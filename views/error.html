@@ -6,17 +6,34 @@
     <link rel="stylesheet" href="/public/css/error.css" />
   </head>
   <body>
-    <script defer>
-      let auth = '<%= auth %>'
-    </script>
+    <% 
+      let ref = "Login"
+      if(auth) ref = "Home"
+    %>
+
+    <nav class="navbar d-flex navbar-dark bg-dark justify-content-between">
+      <div class="mx-2">
+        <span class="text text-white flex-start mx-2">
+          <%= name %>
+        </span>
+      </div>
+        <button
+        onclick="location.replace('/')"
+        class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0" type="button">
+          <span class="text text-white">
+            <%= ref %>
+          </span>
+        </button>
+    </nav>
+
     <div class="container mt-4">
       <h1>Error: <%= error.status || error.code %></h1>
       <p><%= error.message %></p>
-      <button id="save" class="btn btn-dark w-100 mt-4" type="button">
-        <% if(auth) { %> Back to home
-          <% } else { %> Login <% } %>
-        </button>
-      </div>
-    </body>
-    <script src="/public/js/error.js" defer></script>
+      <button 
+      onclick="location.replace('/')"
+      class="btn btn-dark w-100 mt-4" type="button">
+        <%= ref %>
+      </button>
+    </div>
+  </body>
 </html>

@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= chatter %> | Inbox </title>
     <link rel="icon" type="image/png" href="/public/favicon.png" />
-    <script src="/public/min/jquery.min.js"></script>
     <link rel="stylesheet" href="/public/css/chat.css" />
+    <script src="/public/min/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <script>
+      const socket = io()
       let client = '<%= user.username %>'
-      let receiver = '<%= chatter %>'
+      let chatter = '<%= chatter %>'
     </script>
+    
     <nav class="navbar p-2 fixed-top navbar-dark bg-dark d-block">
       <div class="d-flex mx-2 align-items-center">
         <div class="position-relative">
@@ -71,7 +73,6 @@
       <input id="input" type="text" class="form-control px-2 mx-3" placeholder="Enter your message"/>
     <button type="submit" class="btn btn-primary mx-2">Send</button>
   </form>
-
 </main>
 
 <script src="/public/js/chat.js"></script>

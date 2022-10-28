@@ -33,6 +33,9 @@ $("#register").on("click", async function () {
   if (username.length == 0 || password.length == 0) return;
 
   try {
+
+    if(username == name || username == "global") throw new Error("Forbidden 403")
+
     const res = await fetch("/api/register", {
       method: "POST",
       credentials: "same-origin",

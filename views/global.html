@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= name %> | Inbox </title>
+    <link rel="icon" type="image/png" href="/public/favicon.png" />
+    <link rel="stylesheet" href="/public/css/chat.css" />
+    <script src="/public/min/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <script>
+      const socket = io()
+      let client = '<%= user.username %>'
+      let receiver = '<%= name %>'
+    </script>
+    
+    <nav class="navbar p-2 fixed-top navbar-dark bg-dark d-block">
+      <div class="d-flex mx-2 align-items-center">
+        <div class="position-relative">
+          <img 
+          class="rounded-circle border mr-1" alt="" width="40" height="40"
+          src="https://cdn-icons-png.flaticon.com/512/1383/1383676.png"
+          >
+        </div>
+        <div class="flex-grow-1 mx-2 pl-3">
+          <span class="text mx-1 text-white"><b><%= name %></b></span>
+        </div>
+          <button id="home" class="btn flex-end btn-outline-primary my-2 mx-2 my-sm-0" type="button">
+          <span class="text text-white">Home</span></button>
+      </div>
+    </nav>
+
+    <main class="container-fluid">
+
+      <div id="chats" class="chat-messages px-4 py-3"></div>
+
+    <form id="mail" class="form bg bg-light fixed-bottom py-2 input-group">
+      <input id="input" type="text" class="form-control px-2 mx-3" placeholder="Enter your message"/>
+    <button type="submit" class="btn btn-primary mx-2">Send</button>
+    </form>
+    
+    </main>
+
+  <script src="/public/js/global.js"></script>
+
+</body>
+</html>

@@ -87,6 +87,7 @@ dist
 .http
 .rest
 .sessions/
+.undo/
 
 #prisma
 
