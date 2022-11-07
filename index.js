@@ -64,9 +64,6 @@ app.use(router);
 // let users = {}
 socket.on("connection", function (client) {
 
-  // const user = client.handshake.query.user
-  // users[user] = client.id
-
   client.on("global", function (mail){
 
     const data = {
@@ -89,10 +86,6 @@ socket.on("connection", function (client) {
       body: mail.body,
     }
     
-    // socket.to(users[data.to]).emit("mail", data)
-    
-    // client.broadcast.emit("mail", data)
-
     socket.emit("mail", data)
     
     await prisma.mail.create({
@@ -103,10 +96,6 @@ socket.on("connection", function (client) {
     
   })
   
-  // client.on("disconnect", function(){
-    // delete users[user]
-  // })
-
 })
 
 const port = process.env.PORT || 8000;

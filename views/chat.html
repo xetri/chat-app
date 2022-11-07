@@ -45,7 +45,14 @@
                       <img src=<%= Avatar(chat.from) %>
                       class="rounded-circle border border-dark mr-1" alt="" width="42" height="42">
                     <div class="flex-shrink-1 bg-primary text text-light rounded py-2 px-3 mr-3 mx-2">
-                      <div class="mb-1"><em> <%= time(new Date(chat.created).getTime()) %> at <%= new Date(new Date(chat.created).getTime()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' ,hour12: true }) %> </em></div>
+                      <div class="mb-1">
+						  <em> <%= time(new Date(chat.created).getTime()) %> 
+							  at
+							  <script>
+								  document.write(new Date(new Date('<%= chat.created %>').getTime()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' , hour12: true }))
+							  </script>
+							  </em>
+					  </div>
                       <b> <%= chat.body %> </b>
                     </div>
                   </div>
@@ -60,7 +67,14 @@
                     <div class="small text-nowrap"><b><%= chat.from %></b></div>
                   </div>
                   <div class="flex-shrink-1 bg-light rounded py-2 px-3 mx-3">
-                    <div class="mb-1"><em> <%= time(new Date(chat.created).getTime()) %> at <%= new Date(new Date(chat.created).getTime()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' ,hour12: true }) %> </em></div>
+                    <div class="mb-1">
+						 <em> <%= time(new Date(chat.created).getTime()) %> 
+							  at
+							  <script>
+								  document.write(new Date(new Date('<%= chat.created %>').getTime()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' , hour12: true }))
+							  </script>
+							  </em>
+					</div>
                     <b> <%= chat.body %> </b>
                   </div>
                 </div>
