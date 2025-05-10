@@ -92,6 +92,6 @@ dist
 
 #prisma
 
-.db
-.db-journal
+*.db
+*.db-journal
 prisma/migrations/
