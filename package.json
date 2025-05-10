@@ -13,11 +13,11 @@
     "start": "node .",
     "dev": "nodemon",
     "build": "npm run db && npm run sass",
-    "sass": "sass -w public/sass:public/css",
+    "sass": "sass public/sass:public/css",
     "db": "prisma migrate dev --name init"
   },
   "dependencies": {
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^6.7.0",
     "@quixo3/prisma-session-store": "^3.1.10",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20",
-    "prisma": "^4.5.0",
+    "prisma": "^6.7.0",
     "sass": "^1.55.0"
   }
 }
